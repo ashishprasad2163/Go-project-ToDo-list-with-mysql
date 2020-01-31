@@ -6,6 +6,7 @@ import (
 	"hello/main/todo/model"
 	"log"
 	"net/http"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -14,7 +15,8 @@ func main() {
 	mux := controller.Register()
 	db := model.Connect()
 	defer db.Close()
-	log.Fatal(http.ListenAndServe(":3000", mux))
+	port := os.Getenv("PORT")
+	log.Fatal(http.ListenAndServe(":"+port, mux))
 	fmt.Println("Serving...")
 
 }
